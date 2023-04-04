@@ -1,7 +1,8 @@
 const { html } = require('./util');
+const breed = require('../data/breeds');
 
 function addBreed(req, res) {
-    res.write(html(`<form action="/addBreed" method="POST" class="cat-form">
+    res.write(html(`<form action="/cats/addBreed" method="POST" class="cat-form" enctype="multipart/form-data">
     <h2>Add Cat Breed</h2>
     <label for="breed-name">Breed Name</label>
     <input name="breed" type="text" id="breed-name">
@@ -11,7 +12,7 @@ function addBreed(req, res) {
 }
 
 function addCat(req, res) {
-    res.write(html(`<form action="/addCats" method="POST" class="cat-form" enctype="multipart/form-data">
+    res.write(html(`<form action="/cats/addCat" method="POST" class="cat-form" enctype="multipart/form-data">
     <h2>Add Cat</h2>
     <label for="name">Name</label>
     <input name="name" type="text" id="name">
@@ -21,9 +22,7 @@ function addCat(req, res) {
     <input name="upload" type="file" id="image">
     <label for="group">Breed</label>
     <select name="breed" id="group">
-        <option value="Fluffy Cat">Fluffy Cat</option>
-        <option value="Fluffy Cat">Fluffy Cat</option>
-        <option value="Fluffy Cat">Fluffy Cat</option>
+        ${breed.map(b => `<option value="${b.value}">${b.name}</option>`)}
     </select>
     <button type="submit">Add Cat</button>
 </form>`));

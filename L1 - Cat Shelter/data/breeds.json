@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "value": "Fluffy Cat",
+        "name": "Fluffy Cat"
+    },
+    {
+        "value": "Bombay Cat",
+        "name": "Bombay Cat"
+    }
+]

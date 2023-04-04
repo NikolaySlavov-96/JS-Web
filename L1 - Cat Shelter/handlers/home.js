@@ -7,12 +7,12 @@ function homeControler(req, res) {
     <ul>
         ${cats.map(
           (i) => `<li>
-        <img src="${i.img}" alt="Black Cat">
+        <img src="${i.img}" alt="Cat">
         <h3></h3>
         <p><span>Breed: </span>${i.breed}</p>
         <p><span>Description: </span>${i.description}</p>
         <ul class="buttons">
-            <li class="btn edit"><a href="">Change Info</a></li>
+            <li class="btn edit"><a href="${i.id}">Change Info</a></li>
             <li class="btn delete"><a href="">New Home</a></li>
         </ul>
     </li>`
@@ -23,6 +23,11 @@ function homeControler(req, res) {
   res.end();
 }
 
+function defaultPage() {
+
+}
+
 module.exports = {
   homeControler,
+  defaultPage
 };
