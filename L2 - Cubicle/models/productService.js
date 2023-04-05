@@ -3,8 +3,9 @@ const fs = require('fs');
 const fileName = './models/database.json'
 const data = JSON.parse(fs.readFileSync(fileName));
 
-async function getList() {
-    return data;
+async function getList(query, fromDificult, toDificult) {
+    
+    return data.filter(q => q.name.toLowerCase().includes(query.toLowerCase()));
 }
 
 async function getById(id) {
