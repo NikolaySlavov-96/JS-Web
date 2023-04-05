@@ -23,8 +23,8 @@ function homeControler(req, res) {
   res.end();
 }
 
-function defaultPage() {
-
+function defaultPage(req, res) {
+  // res.writeHeader(404)
 }
 
 module.exports = {

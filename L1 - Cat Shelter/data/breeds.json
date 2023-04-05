@@ -1,10 +1,15 @@
 [
-    {
-        "value": "Fluffy Cat",
-        "name": "Fluffy Cat"
-    },
-    {
-        "value": "Bombay Cat",
-        "name": "Bombay Cat"
-    }
+  {
+    "value": "Fluffy Cat",
+    "name": "Fluffy Cat"
+  },
+  {
+    "value": "Bombay Cat",
+    "name": "Bombay Cat"
+  },
+  {
+    "id": "ads3488",
+    "name": "Test",
+    "value": "Test"
+  }
 ]
