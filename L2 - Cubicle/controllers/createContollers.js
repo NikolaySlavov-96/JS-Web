@@ -6,7 +6,7 @@ createControler.get('/', (req, res) => {
 });
 
 createControler.post('/', async (req, res) => {
-    await create(req.body.name, req.body.description, req.body.imageUrl, req.body.difficultyLevel);
+    await create(req.body.name, req.body.description, req.body.imageUrl, Number(req.body.difficultyLevel));
 
     res.redirect('/')
 })

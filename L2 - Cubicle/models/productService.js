@@ -5,7 +5,8 @@ const data = JSON.parse(fs.readFileSync(fileName));
 
 async function getList(query, fromDificult, toDificult) {
     
-    return data.filter(q => q.name.toLowerCase().includes(query.toLowerCase()));
+    return data.filter(q => q.name.toLowerCase().includes(query.toLowerCase()))
+                .filter(q => q.difficultyLevel <= toDificult && q.difficultyLevel >= fromDificult);
 }
 
 async function getById(id) {
