@@ -2,7 +2,7 @@ const createControler = require('express').Router();
 const { create } = require('../models/productService');
 
 createControler.get('/', (req, res) => {
-    res.render('create');
+    res.render('create', { title: 'Create Cube Page' });
 });
 
 createControler.post('/', async (req, res) => {

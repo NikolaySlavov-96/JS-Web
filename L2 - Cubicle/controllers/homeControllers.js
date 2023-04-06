@@ -8,7 +8,7 @@ homeControler.get("/", async (req, res) => {
 
   const allCube = await getList(query, fromDificult, toDificult);
 
-  res.render("home", { allCube, query, fromDificult, toDificult });
+  res.render("home", {title: 'Cubicle', allCube, query, fromDificult, toDificult });
 });
 
 module.exports = homeControler;

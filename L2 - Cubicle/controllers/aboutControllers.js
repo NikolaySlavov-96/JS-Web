@@ -1,7 +1,7 @@
 const aboutControler = require('express').Router();
 
 aboutControler.get('/', (req, res) => {
-    res.render('about');
+    res.render('about', { title: 'About Page' });
 });
 
 module.exports = aboutControler;
