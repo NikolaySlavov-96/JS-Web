@@ -4,7 +4,7 @@ const { createAccessory } = require('../services/servicesAccessory');
 
 
 createControler.get('/cube', (req, res) => {
-    res.render('create');
+    res.render('create', { title: 'Create Cube Page' });
 });
 
 createControler.post('/cube', async (req, res) => {
@@ -14,10 +14,10 @@ createControler.post('/cube', async (req, res) => {
 })
 
 createControler.get('/accessory', (req, res) => {
-    res.render('accessory');
+    res.render('accessory', { title: 'Attach Accessory' });
 })
 
-createControler.post('/accessory', async(req, res) => {
+createControler.post('/accessory', async (req, res) => {
     const body = req.body;
     console.log(body.name, body.description, body.imageUrl);
     await createAccessory(body.name, body.imageUrl, body.description)

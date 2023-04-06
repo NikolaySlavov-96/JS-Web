@@ -1,13 +1,8 @@
 const Accessory = require("../models/accessory");
 
 
-async function getAll() {
+async function getAllAccessory() {
     const result = await Accessory.find({}).lean();
-    return result;
-}
-
-async function getById(id) {
-    const result = await Accessory.findById(id).lean();
     return result;
 }
 
@@ -20,5 +15,6 @@ async function createAccessory(name, imageUrl, description) {
 };
 
 module.exports = {
+    getAllAccessory,
     createAccessory
 }

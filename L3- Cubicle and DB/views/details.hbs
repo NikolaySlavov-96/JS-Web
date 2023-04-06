@@ -1,3 +1,4 @@
+{{#with dataProduct}}
 <h1>{{name}}</h1>
 <img class="cube" src="{{imageUrl}}">
 <div class="details">
@@ -5,6 +6,7 @@
     <p><span>Difficulty level:</span> {{difficultyLevel}}</p>
     <a class="btn" href="/">Back</a>
 </div>
+{{/with}}
 <h2>Accessories</h2>
 {{!-- 
 {{#if}}
