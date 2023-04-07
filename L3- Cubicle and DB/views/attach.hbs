@@ -5,7 +5,7 @@
     <form action="/attach/accessory/{{result._id}}" method="post">
         <label for="accessory">Accessories</label>
         <select id="accessory" name="accessory" />
-        {{#each accessory}}
+        {{#each missingAccessory}}
             {{>accessoryCard}}
         {{/each}}
         </select>

@@ -19,7 +19,6 @@ createControler.get('/accessory', (req, res) => {
 
 createControler.post('/accessory', async (req, res) => {
     const body = req.body;
-    console.log(body.name, body.description, body.imageUrl);
     await createAccessory(body.name, body.imageUrl, body.description)
     res.redirect('/');
 })

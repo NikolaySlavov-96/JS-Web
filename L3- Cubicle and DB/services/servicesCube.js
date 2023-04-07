@@ -1,9 +1,10 @@
 const Cube = require('../models/Cube');
+const Accessory = require('../models/accessory');
 
 async function getAll(query, fromDificult, toDificult) {
     let result = await Cube.find({}).lean();
 
-    if(query !== '' || fromDificult !== '' || toDificult !== '') {
+    if (query !== '' || fromDificult !== '' || toDificult !== '') {
         result = result.filter(f => f.name.toLowerCase().includes(query.toLowerCase()))
             .filter(q => q.difficultyLevel <= toDificult && q.difficultyLevel >= fromDificult);
     }
@@ -25,9 +26,15 @@ async function createCube(name, description, imageUrl, difficultyLevel) {
     });
 };
 
-async function addAccessoryForCubes(id, accessoryId) {
-    console.log(id);
-    console.log(accessoryId.accessory);
+async function addAccessoryForCubes(cubeId, accessoryId) {
+    const cubes = await Cube.findById(cubeId).populate('accessories');
+    const accessory = await Accessory.findById(accessoryId.accessory).populate('cubes');
+
+    cubes.accessories.push(accessoryId.accessory)
+    accessory.cubes.push(cubeId);
+
+    await cubes.save();
+    await accessory.save()
 }
 
 async function deleteById(id) {
