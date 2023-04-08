@@ -12,4 +12,28 @@ detailControler.get("/:productId", async (req, res) => {
     res.render("details", {title: 'Cubicle / Attach Accessory', dataProduct, viewAccessory});
 });
 
+detailControler.get('/:productId/edit', async (req, res) => {
+    const idProdut = req.params.productId;
+    const cubeInfor = await getById(idProdut);
+
+    res.render('edit', {
+        title: 'Edit Cube Page',
+        cubeInfor,
+    })
+});
+
+detailControler.post('/:productId/edit', (req, res) => {
+
+});
+
+detailControler.get('/:productId/delete', (req, res) => {
+    res.render('delete', {
+        title: 'Delete Cube Page'
+    })
+});
+
+detailControler.post('/:productId/delete', (req, res) => {
+
+});
+
 module.exports = detailControler;

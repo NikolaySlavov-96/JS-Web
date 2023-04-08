@@ -5,7 +5,7 @@ const userSchema = new Schema({
     hashedPassword: { type: String, required: true }
 });
 
-userSchema.index({ username }, {
+userSchema.index({ username: 1 }, {
     collation: {
         locale: 'en',
         strength: 2

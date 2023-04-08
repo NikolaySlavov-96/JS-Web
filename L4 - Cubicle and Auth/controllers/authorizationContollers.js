@@ -17,7 +17,7 @@ authorization.post('/register', async (req, res) => {
             throw new Error('All fiels is required');
         }
 
-        if (body.password !== body.repass) {
+        if (body.password !== body.repeatPassword) {
             throw new Error('Password don\'t match');
         }
 
