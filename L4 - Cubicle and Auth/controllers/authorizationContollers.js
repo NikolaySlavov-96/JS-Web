@@ -1,9 +1,10 @@
 const authorization = require('express').Router();
 
+const { isGues, hasUser } = require('../middleware/guards');
 const { register, login } = require('../services/userService');
 const { parserError } = require('../until/parser');
 
-authorization.get('/register', (req, res) => {
+authorization.get('/register', isGues(), (req, res) => {
     res.render('register', {
         title: 'Register Page'
     });
@@ -37,7 +38,7 @@ authorization.post('/register', async (req, res) => {
     }
 })
 
-authorization.get('/login', (req, res) => {
+authorization.get('/login', isGues(), (req, res) => {
     res.render('login', {
         title: 'Login Page'
     });
@@ -64,7 +65,7 @@ authorization.post('/login', async (req, res) => {
     }
 });
 
-authorization.get('/logout', (req, res) => {
+authorization.get('/logout', hasUser(), (req, res) => {
     res.clearCookie('token');
     res.redirect('/');
 })

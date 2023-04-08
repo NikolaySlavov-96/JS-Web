@@ -6,7 +6,7 @@ const createControler = require("../controllers/createContollers");
 const defaultControler = require("../controllers/defaultControllers");
 const detailControler = require("../controllers/detailControllers");
 const homeControler = require("../controllers/homeControllers");
-const { hasUser, isGues } = require("../middleware/guards");
+const { hasUser } = require("../middleware/guards");
 
 module.exports = (app) => {
     app.use('/', homeControler);
@@ -14,6 +14,6 @@ module.exports = (app) => {
     app.use('/details', detailControler);
     app.use('/attach', hasUser(), attachControllers);
     app.use('/about', aboutControler);
-    app.use('/auth', isGues(), authorization);
+    app.use('/auth', authorization);
     app.use('*', defaultControler);
 };

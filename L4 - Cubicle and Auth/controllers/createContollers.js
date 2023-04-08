@@ -9,7 +9,16 @@ createControler.get('/cube', (req, res) => {
 
 createControler.post('/cube', async (req, res) => {
     const body = req.body;
-    await createCube(body.name, body.description, body.imageUrl, Number(body.difficultyLevel))
+
+    const cubeData = {
+        name: body.name, 
+        description: body.description,
+        imageUrl: body.imageUrl, 
+        difficultyLevel: Number(body.difficultyLevel), 
+        owner: req.user._id
+    }
+
+    await createCube(cubeData)
     res.redirect('/')
 })
 

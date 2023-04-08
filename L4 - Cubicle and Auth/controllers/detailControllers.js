@@ -6,10 +6,20 @@ detailControler.get("/:productId", async (req, res) => {
     const id = req.params.productId;
     const dataProduct = await getById(id);
     const accessory = await getAllAccessory();
-
     const viewAccessory = accessory.filter(a => dataProduct.accessories.every(r => r._id.toString() !== a._id.toString()));
 
-    res.render("details", { title: 'Cubicle / Attach Accessory', dataProduct, viewAccessory });
+    let hasOwner = false;
+
+    if (dataProduct.owner.toString() == req.user._id) {
+        hasOwner = true
+    };
+
+    res.render("details", {
+        title: 'Cubicle / Attach Accessory',
+        dataProduct,
+        viewAccessory,
+        hasOwner,
+    });
 });
 
 detailControler.get('/:productId/edit', async (req, res) => {
@@ -27,9 +37,9 @@ detailControler.post('/:productId/edit', async (req, res) => {
     const body = req.body;
 
     const item = {
-        name: body.name, 
-        description: body.description, 
-        imageUrl: body.imageUrl, 
+        name: body.name,
+        description: body.description,
+        imageUrl: body.imageUrl,
         difficultyLevel: Number(body.difficultyLevel)
     }
 
@@ -47,7 +57,7 @@ detailControler.get('/:productId/delete', async (req, res) => {
     })
 });
 
-detailControler.post('/:productId/delete',async (req, res) => {
+detailControler.post('/:productId/delete', async (req, res) => {
     const productId = req.params.productId;
     await deleteById(productId);
     res.redirect('/');

@@ -17,13 +17,8 @@ async function getById(id) {
     return result;
 }
 
-async function createCube(name, description, imageUrl, difficultyLevel) {
-    await Cube.create({
-        name,
-        description,
-        imageUrl,
-        difficultyLevel
-    });
+async function createCube(cubeData) {
+    return await Cube.create(cubeData);
 };
 
 async function addAccessoryForCubes(cubeId, accessoryId) {

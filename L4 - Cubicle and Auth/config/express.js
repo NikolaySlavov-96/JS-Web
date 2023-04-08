@@ -3,6 +3,7 @@ const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('../middleware/session');
+const trimBody = require('../middleware/trimBody');
 
 const hbr = handlebars.create({
     extname: '.hbs'
@@ -17,6 +18,7 @@ module.exports = (app) => {
     app.use(express.urlencoded({extended: true}));
     app.use(cookieParser());
     app.use(session());
+    app.use(trimBody());
 
     //TODO: Setup the static files
     app.use('/static', express.static('static'));
