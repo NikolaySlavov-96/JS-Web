@@ -1,6 +1,6 @@
 const detailControler = require("express").Router();
 const { getAllAccessory } = require("../services/servicesAccessory");
-const { getById } = require("../services/servicesCube");
+const { getById, editCube, deleteById } = require("../services/servicesCube");
 
 detailControler.get("/:productId", async (req, res) => {
     const id = req.params.productId;
@@ -9,7 +9,7 @@ detailControler.get("/:productId", async (req, res) => {
 
     const viewAccessory = accessory.filter(a => dataProduct.accessories.every(r => r._id.toString() !== a._id.toString()));
 
-    res.render("details", {title: 'Cubicle / Attach Accessory', dataProduct, viewAccessory});
+    res.render("details", { title: 'Cubicle / Attach Accessory', dataProduct, viewAccessory });
 });
 
 detailControler.get('/:productId/edit', async (req, res) => {
@@ -22,18 +22,35 @@ detailControler.get('/:productId/edit', async (req, res) => {
     })
 });
 
-detailControler.post('/:productId/edit', (req, res) => {
+detailControler.post('/:productId/edit', async (req, res) => {
+    const productId = req.params.productId;
+    const body = req.body;
 
+    const item = {
+        name: body.name, 
+        description: body.description, 
+        imageUrl: body.imageUrl, 
+        difficultyLevel: Number(body.difficultyLevel)
+    }
+
+    await editCube(productId, item);
+    res.redirect(`/details/${productId}`)
 });
 
-detailControler.get('/:productId/delete', (req, res) => {
+detailControler.get('/:productId/delete', async (req, res) => {
+    const productId = req.params.productId;
+    const productData = await getById(productId);
+
     res.render('delete', {
-        title: 'Delete Cube Page'
+        title: 'Delete Cube Page',
+        productData
     })
 });
 
-detailControler.post('/:productId/delete', (req, res) => {
-
+detailControler.post('/:productId/delete',async (req, res) => {
+    const productId = req.params.productId;
+    await deleteById(productId);
+    res.redirect('/');
 });
 
 module.exports = detailControler;

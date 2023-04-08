@@ -37,6 +37,17 @@ async function addAccessoryForCubes(cubeId, accessoryId) {
     await accessory.save()
 }
 
+async function editCube(id, cubeInfo) {
+    const existing = await Cube.findById(id);
+
+    existing.name = cubeInfo.name;
+    existing.description = cubeInfo.description;
+    existing.imageUrl = cubeInfo.imageUrl;
+    existing.difficultyLevel = cubeInfo.difficultyLevel;
+
+    await existing.save();
+}
+
 async function deleteById(id) {
     const result = await Cube.findByIdAndRemove(id);
     return result;
@@ -46,5 +57,7 @@ module.exports = {
     getAll,
     getById,
     addAccessoryForCubes,
-    createCube
+    createCube,
+    editCube,
+    deleteById
 }
