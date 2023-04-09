@@ -10,12 +10,22 @@ authorization.get('/register', isGues(), (req, res) => {
     });
 });
 
+const URL_REGEX = /[a-zA-Z0-9]/i;
+
 authorization.post('/register', async (req, res) => {
     const body = req.body;
 
     try {
+        if(URL_REGEX.test(body.password) || URL_REGEX.test(body.username)) {
+            throw new Error('Using some english numeric');
+        }
+
         if (body.username == '' || body.password == '') {
             throw new Error('All fiels is required');
+        }
+
+        if(body.password.length < 9) {
+            throw new Error('Password must be at least 6 characters long');
         }
 
         if (body.password !== body.repeatPassword) {
@@ -48,12 +58,16 @@ authorization.post('/login', async (req, res) => {
     const body = req.body;
 
     try {
+        if(body.username == '' || body.password == '') {
+            throw new Error('All fields are required');
+        }
+
         const token = await login(body.username, body.password);
 
         res.cookie('token', token);
         res.redirect('/');
     } catch (err) {
-        const errors = parserError();
+        const errors = parserError(err);
 
         res.render('login', {
             title: 'Login Page',
