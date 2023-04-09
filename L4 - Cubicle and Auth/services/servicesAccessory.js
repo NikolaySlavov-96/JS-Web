@@ -1,4 +1,4 @@
-const Accessory = require("../models/accessory");
+const Accessory = require("../models/Accessory");
 
 
 async function getAllAccessory() {

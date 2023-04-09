@@ -1,5 +1,5 @@
 const Cube = require('../models/Cube');
-const Accessory = require('../models/accessory');
+const Accessory = require('../models/Accessory');
 
 async function getAll(query, fromDificult, toDificult) {
     let result = await Cube.find({}).lean();
