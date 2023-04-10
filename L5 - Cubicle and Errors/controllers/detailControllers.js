@@ -8,17 +8,16 @@ detailControler.get("/:productId", async (req, res) => {
     const accessory = await getAllAccessory();
     const viewAccessory = accessory.filter(a => dataProduct.accessories.every(r => r._id.toString() !== a._id.toString()));
 
-    let hasOwner = false;
+    dataProduct.hasOwner = false;
 
-    if (dataProduct.owner.toString() == req.user._id) {
-        hasOwner = true
+    if (dataProduct.owner.toString() == req.user?._id.toString()) {
+        dataProduct.hasOwner = true;
     };
 
     res.render("details", {
         title: 'Cubicle / Attach Accessory',
         dataProduct,
         viewAccessory,
-        hasOwner,
     });
 });
 

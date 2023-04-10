@@ -10,17 +10,16 @@ createControler.get('/cube', (req, res) => {
 
 createControler.post('/cube', async (req, res) => {
     const body = req.body;
+    const cubeData = {
+        name: body.name, 
+        description: body.description,
+        imageUrl: body.imageUrl, 
+        difficultyLevel: Number(body.difficultyLevel), 
+        owner: req.user._id
+    }
     try{
         if(body.name == '' || body.description == '' || body.imageUrl == '' || body.difficultyLevel == '') {
             throw new Error('All fields is required');
-        } 
-
-        const cubeData = {
-            name: body.name, 
-            description: body.description,
-            imageUrl: body.imageUrl, 
-            difficultyLevel: Number(body.difficultyLevel), 
-            owner: req.user._id
         }
     
         await createCube(cubeData)
@@ -30,12 +29,7 @@ createControler.post('/cube', async (req, res) => {
 
         res.render('create', {
             title: 'Create Cube Page',
-            body: {
-                name: body.name,
-                description: body.description,
-                imageUrl: body.imageUrl,
-                difficultyLevel: body.difficultyLevel
-            },
+            body: cubeData,
             errors,
         })
     }
