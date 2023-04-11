@@ -25,7 +25,7 @@ authorization.post('/register', async (req, res) => {
         }
 
         if(body.password.length < 9) {
-            throw new Error('Password must be at least 6 characters long');
+            throw new Error('Password must be at least 8 characters long');
         }
 
         if (body.password !== body.repeatPassword) {

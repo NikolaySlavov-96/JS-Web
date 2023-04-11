@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "main": "pathToMain",
     "scripts": {
-      "start": "nodemon index.js"  
+        "start": "nodemon index.js"
     },
     "keywords": [],
     "author": "",
@@ -16,6 +16,7 @@
         "cookie-parser": "^1.4.6",
         "express": "^4.17.1",
         "express-handlebars": "^3.1.0",
+        "express-validation": "^4.1.0",
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^7.0.3",
         "nodemon": "^2.0.22",
