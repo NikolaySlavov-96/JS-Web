@@ -14,7 +14,7 @@ async function register(username, email, password) {
     const userCreate = User.create({
         username,
         email,
-        hashedPassword
+        password: hashedPassword
     });
     const token = createSession(userCreate);
 
@@ -23,17 +23,16 @@ async function register(username, email, password) {
 
 async function login(email, password) {
     const user = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
-
     if (!user) {
         throw new Error('Email or Password is not correct');
     }
-
-    const hasMatch = await bcrypt.compare(password, user.hashedPassword);
-
+    
+    const hasMatch = await bcrypt.compare(password, user.password);
+    
     if (hasMatch == false) {
         throw new Error('Email or Password is not correct');
     }
-
+    
     const token = createSession(user);
     return token;
 }

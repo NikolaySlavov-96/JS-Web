@@ -1,9 +1,10 @@
 const { register, login } = require('../servicess/userService');
 const { body, validationResult } = require('express-validator');
+const { hasUser, isGues } = require('../middleware/guards');
 
 const authController = require('express').Router();
 
-authController.get('/login', (req, res) => {
+authController.get('/login', isGues(), (req, res) => {
     res.render('login', {
         title: 'Login Page - Gaming Team'
     });
@@ -17,21 +18,21 @@ authController.post('/login', async (req, res) => {
             throw new Error('All fields is required')
         }
 
-        const token = await login(body.username, body.password);
+        const token = await login(body.email, body.password);
         res.cookie('token', token);
-        res.redirect('/')
+        res.redirect('/');
     } catch (err) {
         res.render('login', {
             title: 'Login Page - Gaming Team',
             body: {
                 email: body.email
             },
-            errors: 'Test Login'
+            errors: err
         })
     }
 })
 
-authController.get('/register', (req, res) => {
+authController.get('/register', isGues(), (req, res) => {
     res.render('register', {
         title: 'Register Page - Gaming Team'
     });
@@ -57,7 +58,7 @@ authController.post('/register',
                 throw new Error('Password don\'t match')
             }
 
-            const token = await register(body.username, body.email, body, password);
+            const token = await register(body.username, body.email, body.password);
             res.cookie('token', token);
             res.redirect('/');
         } catch (err) {
@@ -67,12 +68,12 @@ authController.post('/register',
                     email: body.email,
                     username: body.username
                 },
-                errors: 'Test Register',
+                errors: err,
             })
         }
     })
 
-authController.get('/logout', (req, res) => {
+authController.get('/logout', hasUser(), (req, res) => {
     res.clearCookie('token');
     res.redirect('/');
 });
