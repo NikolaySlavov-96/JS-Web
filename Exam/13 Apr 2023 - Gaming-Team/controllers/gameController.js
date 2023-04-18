@@ -1,5 +1,6 @@
 const { hasUser } = require('../middleware/guards');
 const { createGame, getAll, getById, buyGame, deleteById, updateGame } = require('../servicess/gameService');
+const { parseErrors } = require('../util/parser');
 
 const gameController = require('express').Router();
 
@@ -40,13 +41,17 @@ gameController.post('/create', async (req, res) => {
             throw new Error('Platform not required');
         }
 
+        if (game.price <= 0) {
+            throw new Error('Price is be positive')
+        }
+
         const data = await createGame(game);
         res.redirect('/game/catalog');
     } catch (err) {
         res.render('create', {
             title: 'Create Page - Gaming Team',
             game,
-            err,
+            errors: parseErrors(err),
         })
     }
 
@@ -67,7 +72,7 @@ gameController.post('/edit/:id', async (req, res) => {
     if (game.owner.toString() !== req.user._id) {
         return res.redirect('/auth/login');
     }
-    
+
     const body = req.body;
 
     const editInfor = {
@@ -90,14 +95,17 @@ gameController.post('/edit/:id', async (req, res) => {
             throw new Error('Platform not required');
         }
 
+        if (editInfor.price <= 0) {
+            throw new Error('Price is be positive')
+        }
+
         await updateGame(idGame, editInfor);
-        res.redirect('/game/detail/' + idGame);
-    } catch (err) { 
-        console.log(err);
+        res.redirect('/game/catalog');
+    } catch (err) {
         res.render('edit', {
             title: 'Edit Page - Gaming Team',
-            game: editInfor,
-            err
+            game: Object.assign(editInfor, { _id: req.params.id }),
+            errors: parseErrors(err)
         })
     }
 });
@@ -122,22 +130,46 @@ gameController.get('/detail/:id', async (req, res) => {
     res.render('details', {
         title: 'Details Page',
         gameInfo,
-        infoType
+        infoType,
     })
 });
 
 gameController.get('/delete/:id', hasUser(), async (req, res) => {
     const idGame = req.params.id;
+    const game = await getById(idGame);
+
+    if (game.owner !== req.user.id) {
+        return res.redirect('/auth/login');
+    }
+
     await deleteById(idGame);
     res.redirect('/game/catalog');
 });
 
 gameController.get('/buy/:id', hasUser(), async (req, res) => {
     const idGame = req.params.id;
+    const game = await getById(idGame);
     const idUser = req.user._id;
 
-    await buyGame(idGame, idUser);
-    res.redirect('/game/detail/' + idGame);
+    try {
+        if (game.owner == idUser) {
+            game.isOwner = true;
+            throw new Error('Cannot buy your own Game')
+        }
+
+        if (game.boughtBy.map(b => b.toString()).includes(idUser.toString())) {
+            game.isBuy = true;
+            throw new Error('Cannot buy twice');
+        }
+        await buyGame(idGame, idUser);
+        res.redirect('/game/detail/' + idGame);
+    } catch (err) {
+        res.render('detail', {
+            title: 'Details Page',
+            game,
+            errors: parseErrors(err)
+        })
+    }
 })
 
 

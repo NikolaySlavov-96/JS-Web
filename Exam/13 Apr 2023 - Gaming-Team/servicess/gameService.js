@@ -1,7 +1,17 @@
 const Game = require("../models/Game");
 
-async function getAll() {
-    return Game.find({}).lean();
+async function getAll(game, platform) {
+    const search = {};
+    if(game) {
+        // search.game = game;
+        search.game = new RegExp(game, 'i');
+    }
+    if(platform) {
+        // search.platform = platform;
+        search.platform = new RegExp(platform, 'i');
+    }
+
+    return Game.find(search).lean();
 }
 
 async function getById(id) {

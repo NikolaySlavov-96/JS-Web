@@ -1,6 +1,7 @@
 const { register, login } = require('../servicess/userService');
 const { body, validationResult } = require('express-validator');
 const { hasUser, isGues } = require('../middleware/guards');
+const { parseErrors } = require('../util/parser');
 
 const authController = require('express').Router();
 
@@ -27,7 +28,7 @@ authController.post('/login', async (req, res) => {
             body: {
                 email: body.email
             },
-            errors: err
+            errors: parseErrors(err)
         })
     }
 })
@@ -68,7 +69,7 @@ authController.post('/register',
                     email: body.email,
                     username: body.username
                 },
-                errors: err,
+                errors: parseErrors(err),
             })
         }
     })
