@@ -12,11 +12,16 @@
 </head>
 
 <body>
-    <!-- In case of error, you should display div with class "errorContainer" -->
-    <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-    <!--<div class="error-box">
-            <p>Error</p>
-        </div>-->
+
+    {{#if errors}}
+        <!-- In case of error, you should display div with class "errorContainer" -->
+        <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+        <div class="error-box">
+            {{#each errors}}
+                <p>{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
 
     <header class="header">
 
@@ -24,13 +29,16 @@
             <nav class="navbar">
                 <a href="/">Home</a>
                 <a href="/catalog">Catalog</a>
-                <!--Only for logged user-->
-                <a href="/profile">Profile</a>
-                <a href="/catalog/create">Create Review</a>
-                <a href="/auth/logout">Logout</a>
-                <!--Only for guest-->
-                <a href="/auth/login">Login</a>
-                <a href="/auth/register">Register</a>
+                {{#if username}}
+                    <!--Only for logged user-->
+                    <a href="/profile">Profile</a>
+                    <a href="/catalog/create">Create Review</a>
+                    <a href="/auth/logout">Logout</a>
+                {{else}}
+                    <!--Only for guest-->
+                    <a href="/auth/login">Login</a>
+                    <a href="/auth/register">Register</a>
+                {{/if}}
             </nav>
         </div>
 
