@@ -14,7 +14,7 @@ async function createBook(book) {
 
 async function updateBook(id, book) {
     const bookData = await Book.findById(id);
-    
+
     bookData.titleBook = book.titleBook
     bookData.author = book.author
     bookData.genge = book.gange;
@@ -31,7 +31,10 @@ async function deleteById(id) {
 };
 
 async function wisheBook(idBook, idUser) {
+    const bookInfor = await Book.findById(idBook);
 
+    bookInfor.wishingList.push(idUser);
+    await bookInfor.save();
 }
 
 module.exports = {
@@ -40,5 +43,5 @@ module.exports = {
     createBook,
     updateBook,
     deleteById,
-    wisheBook
+    wisheBook,
 }

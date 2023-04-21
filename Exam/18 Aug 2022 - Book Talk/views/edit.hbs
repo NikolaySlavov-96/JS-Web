@@ -1,18 +1,20 @@
 <section class="edit-form-container">
-    <form action="">
-        <h3>Edit Book Review</h3>
-        <label>Title</label>
-        <input type="text" name="titleBook" class="box" value="{{title}}" id="" />
-        <label>Author</label>
-        <input type="text" name="author" class="box" value="{{author}}" id="" />
-        <label>Genre</label>
-        <input type="text" name="genge" class="box" value="{{genge}}" id="" />
-        <label>Stars</label>
-        <input type="number" name="start" class="box" value="{{start}}" id="" />
-        <label>Image</label>
-        <input type="text" name="image" class="box" value="{{image}}" id="" />
-        <label>Review</label>
-        <textarea class="box" name="bookReview">{{bookReview}}</textarea>
-        <input type="submit" value="Edit" class="btn" />
+    <form action="/catalog/edit/{{book._id}}" method="post">
+        {{#with book}}
+            <h3>Edit Book Review</h3>
+            <label>Title</label>
+            <input type="text" name="titleBook" class="box" value="{{titleBook}}" id="" />
+            <label>Author</label>
+            <input type="text" name="author" class="box" value="{{author}}" id="" />
+            <label>Genre</label>
+            <input type="text" name="genge" class="box" value="{{genge}}" id="" />
+            <label>Stars</label>
+            <input type="number" name="start" class="box" value="{{start}}" id="" />
+            <label>Image</label>
+            <input type="text" name="image" class="box" value="{{image}}" id="" />
+            <label>Review</label>
+            <textarea class="box" name="bookReview">{{bookReview}}</textarea>
+            <input type="submit" value="Edit" class="btn" />
+        {{/with}}
     </form>
 </section>
