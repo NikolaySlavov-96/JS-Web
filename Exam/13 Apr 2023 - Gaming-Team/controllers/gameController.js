@@ -121,11 +121,12 @@ gameController.get('/detail/:id', async (req, res) => {
         if (gameInfo.owner == req.user._id) {
             infoType.isOwner = true;
         }
+        
+        if (gameInfo.boughtBy.map(g => g.toString()).includes(req.user._id)) {
+            infoType.isBuy = true;
+        }
     }
 
-    if (gameInfo.boughtBy.map(g => g.toString()).includes(req.user._id)) {
-        infoType.isBuy = true;
-    }
 
     res.render('details', {
         title: 'Details Page',
