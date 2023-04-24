@@ -1,8 +1,7 @@
 const { verificationToken } = require("../services/authService");
 
 module.exports = () => async (req, res, next) => {
-    const token = req.cookie.token;
-
+    const token = req.cookies.token;
     if (token) {
         try {
             const userData = await verificationToken(token);

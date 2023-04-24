@@ -15,9 +15,13 @@
 
         <!-- In case of error, you should display div with class "error-box" -->
         <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-        <!--<div class="error-box">
-            <p>Error</p>
-        </div>-->
+        {{#if errors}}
+            <div class="error-box">
+                {{#each errors}}
+                    <p>{{this}}</p>
+                {{/each}}
+            </div>
+        {{/if}}
 
         <nav>
 
@@ -28,12 +32,15 @@
             <ul class="menu">
                 <li><a href="/catalog">Gallery</a></li>
                 <!-- Logged users -->
-                <li><a href="/catalog/create">Create Publication</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/auth/logout">Logout</a></li>
-                <!-- Guest users -->
-                <li><a href="/auth/login">Login</a></li>
-                <li><a href="/auth/register">Register</a></li>
+                {{#if username}}
+                    <li><a href="/catalog/create">Create Publication</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                {{else}}
+                    <!-- Guest users -->
+                    <li><a href="/auth/login">Login</a></li>
+                    <li><a href="/auth/register">Register</a></li>
+                {{/if}}
             </ul>
 
         </nav>

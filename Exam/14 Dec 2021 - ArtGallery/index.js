@@ -3,7 +3,7 @@ const expressConfig = require('./config/expressConfig');
 const databaseConfig = require('./config/databaseConfig');
 const routerConfig = require('./config/routerConfig');
 
-const PORT = 3030;
+const PORT = 3000;
 
 
 start();

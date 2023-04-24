@@ -25,7 +25,7 @@ async function register(username, email, password) {
 };
 
 async function login(email, password) {
-    const taken = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+    const taken = await User.findOn({ email }).collation({ locale: 'en', strength: 2 });
 
     if (!taken) {
         throw new Error('Username or Password don\'t match');
