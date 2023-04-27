@@ -22,7 +22,6 @@ artController.get('/create', hasUser(), (req, res) => {
 artController.post('/create', async (req, res) => {
     const body = req.body;
 
-
     const art = {
         titleArt: body.titleArt,
         technique: body.technique,
@@ -90,18 +89,18 @@ artController.post('/edit/:id', async (req, res) => {
     const body = req.body;
 
     const art = {
-        titleArt: body.titleArt,
-        technique: body.technique,
-        picture: body.picture,
-        certificate: body.certificate,
-    }
+    titleArt: body.titleArt,
+    technique: body.technique,
+    picture: body.picture,
+    certificate: body.certificate,
+}
 
     try {
         if (Object.values(art).some(a => !a)) {
             throw new Error('All field is required');
         }
 
-        if (art.certificate != 'Yes' || art.certificate != 'No') {
+        if (art.certificate != 'Yes' && art.certificate != 'No') {
             throw new Error('Certificate Yes or No')
         }
 
