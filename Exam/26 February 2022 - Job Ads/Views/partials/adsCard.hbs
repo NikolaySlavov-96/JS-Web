@@ -6,16 +6,16 @@
 
     <article class="all-ads-card-content">
         <!--You must put the headline value in <h2>-->
-        <h2>UI / UX Designers</h2>
-        <h3>Company Name: Digital Solutions</h3>
+        <h2>{{headline}}</h2>
+        <h3>Company Name: {{company}}</h3>
         <article class="all-ads-card-content-item">
             <!-- Do not forget to change the path to the image -->
             <img src="/static/img/map-icon.png">
-            <p>Location 210-27 Sofia, Market Street, Bulgaria</p>
+            <p>Location {{location}}</p>
         </article>
     </article>
 
     <article class="all-ads-card-buttons">
-        <a href="#" class="btn-details">Details</a>
+        <a href="/jobs/detail/{{_id}}" class="btn-details">Details</a>
     </article>
 </article>

@@ -5,7 +5,6 @@ module.exports = () => (req, res, next) => {
     if(token) {
         try {
             const userVerify = verifyToken(token);
-            console.log(userVerify)
             req.user = userVerify;
             res.locals.email = userVerify.email;
         } catch(err) {
