@@ -1,3 +1,6 @@
 const Ad = require("../Models/Ad");
 
-Ad
+
+async function getThreeAds() {
+    const ads = await Ad.find()
+}

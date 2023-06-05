@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcryp = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
 
@@ -6,18 +6,17 @@ const JWT_SECTER = 'hahtnnfgyf';
 
 async function register(email, password, description) {
 
-    const chechEmail = await User.findOne({ email });
+    const chechEmail = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
 
     if (chechEmail) {
         throw new Error('Userna is taken');
     }
 
-    const hashedPassword = bcrypt.hash(password, 10);
-
+    const hashedPassword = await bcryp.hash(password, 10);
     const user = await User.create({
         email,
         hashedPassword,
-        description
+        skills: description
     });
 
     const token = createSession(user);
@@ -26,16 +25,16 @@ async function register(email, password, description) {
 }
 
 async function login(email, password) {
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
 
-    if(!user) {
+    if (!user) {
         throw new Error('Incorrect username or password');
     }
 
-    const hasMatch = bcrypt.compare(password, user.hashedPassword);
+    const hashedPassword = await bcryp.compare(password, user.hashedPassword);
 
-    if(hasMatch == false) {
-        throw new Error('Incorrect username or password');
+    if(hashedPassword == false) {
+        throw new Error('Password is not correct')
     }
 
     const token = createSession(user);
