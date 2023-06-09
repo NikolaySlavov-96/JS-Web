@@ -1,10 +1,12 @@
+const { isGuest, hasUser } = require('../middlewares/guards');
 const { login } = require('../services/userServices');
 const { register } = require('../services/userServices');
+const { partserError } = require('../util/parser');
 
 const authController = require('express').Router();
 
 
-authController.get('/login', (req, res) => {
+authController.get('/login', isGuest(), (req, res) => {
     res.render('login', {
         title: 'Login Page'
     })
@@ -28,7 +30,7 @@ authController.post('/login', async (req, res) => {
     } catch(err) {
         res.render('login', {
             title: 'Login Page',
-            error: err,
+            error: partserError(err),
             body: {
                 email: body.email
             }
@@ -36,7 +38,7 @@ authController.post('/login', async (req, res) => {
     } 
 });
 
-authController.get('/register', (req, res) => {
+authController.get('/register', isGuest(), (req, res) => {
     res.render('register', {
         title: 'Register Page'
     })
@@ -45,7 +47,7 @@ authController.get('/register', (req, res) => {
 authController.post('/register', async (req, res) => {
     const body = req.body;
     try {
-        if(body.email.length < 6) {
+        if(body.password.length < 6) {
             throw new Error('Email addres is not long');
         }
     
@@ -64,7 +66,7 @@ authController.post('/register', async (req, res) => {
     } catch(err) {
         res.render('register', {
             title: 'Register Page',
-            error: err,
+            error: partserError(err),
             body: {
                 email: body.email,
                 description: body.description
@@ -75,7 +77,7 @@ authController.post('/register', async (req, res) => {
 
 });
 
-authController.get('/logout', (req, res) => {
+authController.get('/logout', hasUser(), (req, res) => {
     res.clearCookie('token');
     res.redirect('/');
 });

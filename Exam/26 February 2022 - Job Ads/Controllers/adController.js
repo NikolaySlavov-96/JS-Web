@@ -1,4 +1,6 @@
+const { hasUser } = require('../middlewares/guards');
 const { createAd, getAllAds, getOneAd, getAdPopulate, applyAd, updateAd, removeById } = require('../services/adServices');
+const { partserError } = require('../util/parser');
 
 const adController = require('express').Router();
 
@@ -11,9 +13,9 @@ adController.get('/all', async (req, res) => {
     })
 });
 
-adController.get('/create', (req, res) => {
+adController.get('/create', hasUser(), (req, res) => {
     res.render('create', {
-        title: 'Create Page'
+        title: 'Create Page',
     })
 });
 
@@ -39,7 +41,7 @@ adController.post('/create', async (req, res) => {
     } catch (err) {
         res.render('create', {
             title: 'Create Page',
-            error: err,
+            error: partserError(err),
             body: {
                 headline: body.headline,
                 location: body.location,
@@ -90,19 +92,17 @@ adController.get('/apply/:id', async (req, res) => {
             throw new Error('Cannot apply twice');
         }
         await applyAd(id, userId);
-        console.log('vote')
         res.redirect('/jobs/details/' + id);
 
     } catch (err) {
-        console.log(err);
         res.render('details', {
             title: 'Detail Page',
-            error: err,
+            error: partserError(err),
         })
     }
 });
 
-adController.get('/edit/:id', async (req, res) => {
+adController.get('/edit/:id', hasUser(), async (req, res) => {
     const ad = await getOneAd(req.params.id);
 
     res.render('edit', {
@@ -138,12 +138,12 @@ adController.post('/edit/:id', async (req, res) => {
         res.render('edit', {
             title: 'Edit Page',
             ad: Object.assign(editValueAd, { _id: req.user.id }),
-            error: err
+            error: partserError(err)
         })
     }
 });
 
-adController.get('/delete/:id', async (req, res) => {
+adController.get('/delete/:id', hasUser(), async (req, res) => {
     const id = req.params.id;
 
     await removeById(id);
