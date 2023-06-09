@@ -6,7 +6,6 @@ const adController = require('express').Router();
 
 adController.get('/all', async (req, res) => {
     const ads = await getAllAds();
-    console.log(ads)
     res.render('allAds', {
         title: 'All Ads',
         ads,
@@ -21,7 +20,6 @@ adController.get('/create', hasUser(), (req, res) => {
 
 adController.post('/create', async (req, res) => {
     const body = req.body;
-    console.log(req.user._id)
     const ad = {
         headline: body.headline,
         location: body.location,
