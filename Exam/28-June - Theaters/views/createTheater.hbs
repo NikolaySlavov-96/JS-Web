@@ -1,21 +1,21 @@
 <!-- <title>Express Retake Exam January 2019</title> -->
 
-<form class="theater-form" action="/theat/create" method="POST">
+<form class="theater-form" action="/thead/create" method="POST">
     <h1>Create Theater</h1>
     <div>
         <label for="title">Theater Title:</label>
-        <input type="text" placeholder="Theater name" value="">
+        <input type="text" placeholder="Theater name" value="{{body.title}}" name="title">
     </div>
     <div>
         <label for="description">Theater Description:</label>
-        <textarea placeholder="Description"></textarea>
+        <textarea placeholder="Description" name="description">{{body.description}}</textarea>
     </div>
     <div>
         <label for="imageUrl">Image url:</label>
-        <input type="text" placeholder="Image Url" value="">
+        <input type="text" placeholder="Image Url" value="{{body.imgUrl}}" name="imgUrl">
     </div>
     <div class="check">
-        <input type="checkbox" id="check-box">
+        <input type="checkbox" id="check-box" name="publick">
         <label for="check-box">Public</label>
     </div>
     <button class="btn" type="submit">Submit</button>
